@@ -28,7 +28,7 @@ if(!isProduction) {
 }
 
 // Database config
-const db = require('./config/keys').MongoURI;
+const db = (process.env.mongo_key).MongoURI;
 
 //Configure Mongoose
 mongoose.connect(db, { useNewUrlParser: true })
