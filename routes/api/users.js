@@ -5,6 +5,8 @@ const auth = require('../auth');
 const Users = mongoose.model('Users');
 
 //POST new user route (optional, everyone has access)
+//We Create a new user with email and email this way
+
 router.post('/', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
 
@@ -33,6 +35,8 @@ router.post('/', auth.optional, (req, res, next) => {
 });
 
 //POST login route (optional, everyone has access)
+//We get a new token everytime we call this
+
 router.post('/login', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
 
@@ -69,6 +73,8 @@ router.post('/login', auth.optional, (req, res, next) => {
 });
 
 //GET current route (required, only authenticated users have access)
+//We only need the token to retrieve the data
+
 router.get('/current', auth.required, (req, res, next) => {
     const { payload: { id } } = req;
 
