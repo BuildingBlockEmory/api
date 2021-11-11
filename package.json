@@ -1,0 +1,11 @@
+{
+  "name": "api-unity",
+  "version": "1.0.0",
+  "description": "api system for the Building Block Application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shengkai",
+  "license": "MIT"
+}
