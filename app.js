@@ -26,6 +26,7 @@ app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave
 // Database config
 const db = require('./config/keys').MongoURI;
 
+
 if(!isProduction) {
     app.use(errorHandler());
 }

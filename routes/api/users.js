@@ -5,7 +5,7 @@ const auth = require('../auth');
 const Users = mongoose.model('Users');
 
 //POST new user route (optional, everyone has access)
-//We Create a new user with email and email this way
+//We create a new user with email and password this way
 
 router.post('/', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
@@ -39,6 +39,7 @@ router.post('/', auth.optional, (req, res, next) => {
 
     // if the email has already been registered
 
+
     Users.findOne({email: user.email})
         .then(single_user => {
             if (single_user) {
@@ -49,6 +50,7 @@ router.post('/', auth.optional, (req, res, next) => {
                     },
                 });
             } else {
+                // user does not exist and make a new user
                 const finalUser = new Users(user);
 
                 finalUser.setPassword(user.password);
@@ -62,6 +64,10 @@ router.post('/', auth.optional, (req, res, next) => {
 
 
 });
+
+//PUT existing user route (optional, everyone has access)
+//We update a user this way
+
 
 //POST login route (optional, everyone has access)
 //We get a new token everytime we call this
