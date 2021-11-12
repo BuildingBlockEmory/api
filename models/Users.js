@@ -4,10 +4,67 @@ const jwt = require('jsonwebtoken');
 
 const { Schema } = mongoose;
 
+const TaskSchema = new mongoose.Schema( {
+    name: {
+        type: String,
+        required: true,
+    },
+    category: {
+        type: String,
+        enum: ['study', 'wellness'],
+        required: true,
+    },
+    difficulty: {
+        type: String,
+        enum: ['high', 'medium', 'low'],
+        required: true,
+    },
+    isCompleted: {
+        type: Boolean,
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
+});
+
+const BuildingSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+    },
+    cost: {
+        type: Number,
+        required: true,
+    },
+    xValue: {
+        type: Number,
+        required: true,
+    },
+    yValue: {
+        type: Number,
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
+});
+
+
 const UsersSchema = new Schema({
     email: String,
     hash: String,
     salt: String,
+    buildings: [BuildingSchema],
+    tasks: [TaskSchema],
+    date: Date,
+    wellness_point: Number,
+    study_point: Number
 });
 
 UsersSchema.methods.setPassword = function(password) {
@@ -37,6 +94,10 @@ UsersSchema.methods.toAuthJSON = function() {
         _id: this._id,
         email: this.email,
         token: this.generateJWT(),
+        date: this.date,
+        wellness_point: this.wellness_point,
+        study_point: this.study_point,
+
     };
 };
 

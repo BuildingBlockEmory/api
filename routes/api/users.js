@@ -10,6 +10,7 @@ const Users = mongoose.model('Users');
 router.post('/', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
 
+    // if there is no email
     if(!user.email) {
         return res.status(422).json({
             errors: {
@@ -18,6 +19,7 @@ router.post('/', auth.optional, (req, res, next) => {
         });
     }
 
+    // if there is no password
     if(!user.password) {
         return res.status(422).json({
             errors: {
@@ -26,12 +28,39 @@ router.post('/', auth.optional, (req, res, next) => {
         });
     }
 
-    const finalUser = new Users(user);
+    // if the password is too short
+    if (user.password.length < 6) {
+        return res.status(422).json({
+            errors: {
+                password: 'too short',
+            },
+        });
+    }
 
-    finalUser.setPassword(user.password);
+    // if the email has already been registered
 
-    return finalUser.save()
-        .then(() => res.json({ user: finalUser.toAuthJSON() }));
+    Users.findOne({email: user.email})
+        .then(single_user => {
+            if (single_user) {
+                // user already exists
+                return res.status(422).json({
+                    errors: {
+                        email: 'already registered',
+                    },
+                });
+            } else {
+                const finalUser = new Users(user);
+
+                finalUser.setPassword(user.password);
+
+                return finalUser.save()
+                    .then(() => res.json({ user: finalUser.toAuthJSON() }))
+                    .catch(err => console.log(err));
+            }
+        })
+        .catch(err => console.error(`Failed to find document: ${err}`));
+
+
 });
 
 //POST login route (optional, everyone has access)

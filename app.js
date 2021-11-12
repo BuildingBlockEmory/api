@@ -23,12 +23,14 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
+// Database config
+const db = require('./config/keys').MongoURI;
+
 if(!isProduction) {
     app.use(errorHandler());
 }
 
-// Database config
-const db = (process.env.mongo_key).MongoURI;
+
 
 //Configure Mongoose
 mongoose.connect(db, { useNewUrlParser: true })
@@ -65,6 +67,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
