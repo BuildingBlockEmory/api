@@ -97,7 +97,8 @@ UsersSchema.methods.toAuthJSON = function() {
         date: this.date,
         wellness_point: this.wellness_point,
         study_point: this.study_point,
-
+        buildings: this.buildings,
+        tasks: this.tasks,
     };
 };
 
