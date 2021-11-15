@@ -67,7 +67,30 @@ router.post('/', auth.optional, (req, res, next) => {
 
 //PUT existing user route (optional, everyone has access)
 //We update a user this way
-router.put('/update', auth.required, (req, res, next) => {
+router.put('/update', auth.required, async (req, res, next) => {
+    const { payload: { id } } = req;
+    const { body: { user } } = req;
+    console.log(user);
+    // console.log(req);
+    // console.log(id);
+    // console.log(user)
+    Users.findOneAndUpdate({ _id: id },
+        { $set: {
+            wellness_point: user.wellness_point,
+            study_point: user.study_point,
+            buildings: user.buildings,
+            tasks: user.tasks }
+        }, {upsert: false}, (err, doc) => {
+            if (err) {
+                return res.status(422).json({
+                    errors: {
+                        password: 'cannot update',
+                    },
+                });
+            } else {
+                return res.json({ user: doc.toAuthJSON() })
+            }
+        })
 
 })
 
