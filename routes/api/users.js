@@ -67,7 +67,9 @@ router.post('/', auth.optional, (req, res, next) => {
 
 //PUT existing user route (optional, everyone has access)
 //We update a user this way
+router.put('/update', auth.required, (req, res, next) => {
 
+})
 
 //POST login route (optional, everyone has access)
 //We get a new token everytime we call this
