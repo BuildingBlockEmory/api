@@ -70,10 +70,6 @@ router.post('/', auth.optional, (req, res, next) => {
 router.put('/update', auth.required, async (req, res, next) => {
     const { payload: { id } } = req;
     const { body: { user } } = req;
-    console.log(user);
-    // console.log(req);
-    // console.log(id);
-    // console.log(user)
     Users.findOneAndUpdate({ _id: id },
         { $set: {
             wellness_point: user.wellness_point,

@@ -86,3 +86,9 @@ The response will be:
     }
 }
 ```
+### Update tasks and buildings information
+We use "put" request at http://localhost:8000/api/users/update. Here we need to use the JWT in the header, but we do not need the email or password.
+```
+PUT http://localhost:8000/api/users/update
+```
+![screenshot](img/img4.png)
