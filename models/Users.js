@@ -67,6 +67,14 @@ const UsersSchema = new Schema({
     study_point: Number
 });
 
+const ChallengeSchema = new Schema({
+    userID: Number,
+    taskID: Number,
+    title: String,
+    description: String,
+    userEnrolled: [Number]
+});
+
 UsersSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
