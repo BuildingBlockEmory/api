@@ -4,6 +4,7 @@ const router = require('express').Router();
 const auth = require('../auth');
 const Users = mongoose.model('Users');
 
+
 //POST new user route (optional, everyone has access)
 //We create a new user with email and password this way
 
@@ -75,7 +76,9 @@ router.put('/update', auth.required, async (req, res, next) => {
             wellness_point: user.wellness_point,
             study_point: user.study_point,
             buildings: user.buildings,
-            tasks: user.tasks }
+            tasks: user.tasks,
+            challenges: user.challenges,
+            gems: user.gems }
         }, {upsert: false}, (err, doc) => {
             if (err) {
                 return res.status(422).json({

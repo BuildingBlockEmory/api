@@ -55,6 +55,14 @@ const BuildingSchema = new Schema({
     },
 });
 
+const ChallengeSchema = new Schema({
+    userID: Number,
+    taskID: Number,
+    title: String,
+    description: String,
+    userEnrolled: [Number],
+    date: Date,
+});
 
 const UsersSchema = new Schema({
     email: String,
@@ -62,18 +70,14 @@ const UsersSchema = new Schema({
     salt: String,
     buildings: [BuildingSchema],
     tasks: [TaskSchema],
+    challenges: [ChallengeSchema],
     date: Date,
     wellness_point: Number,
-    study_point: Number
+    study_point: Number,
+    gems: Number
 });
 
-const ChallengeSchema = new Schema({
-    userID: Number,
-    taskID: Number,
-    title: String,
-    description: String,
-    userEnrolled: [Number]
-});
+
 
 UsersSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
@@ -107,7 +111,23 @@ UsersSchema.methods.toAuthJSON = function() {
         study_point: this.study_point,
         buildings: this.buildings,
         tasks: this.tasks,
+        challenges: this.challenges,
+        gems: this.gems
     };
 };
 
+ChallengeSchema.methods.toJSON = function () {
+    return {
+        _id: this._id,
+        userID: this.userID,
+        taskID: this.taskID,
+        title: this.title,
+        description: this.description,
+        userEnrolled: this.userEnrolled,
+        date: this.date
+    }
+}
+
+
+mongoose.model("Challenges", ChallengeSchema);
 mongoose.model('Users', UsersSchema);
