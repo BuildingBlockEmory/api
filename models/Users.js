@@ -56,11 +56,12 @@ const BuildingSchema = new Schema({
 });
 
 const ChallengeSchema = new Schema({
-    userID: Number,
+    createUserID: Number,
     taskID: Number,
     title: String,
     description: String,
     userEnrolled: [Number],
+    isCompleted: Boolean,
     date: Date,
 });
 
@@ -119,11 +120,12 @@ UsersSchema.methods.toAuthJSON = function() {
 ChallengeSchema.methods.toJSON = function () {
     return {
         _id: this._id,
-        userID: this.userID,
+        createUserID: this.createUserID,
         taskID: this.taskID,
         title: this.title,
         description: this.description,
         userEnrolled: this.userEnrolled,
+        isCompleted: this.isCompleted,
         date: this.date
     }
 }

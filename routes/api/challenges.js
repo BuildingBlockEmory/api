@@ -4,7 +4,7 @@ const Challenges = mongoose.model('Challenges');
 
 
 // POST new challenge route
-router.post('/post', (req, res, next) => {
+router.post('/insertOne', (req, res, next) => {
     const { body: { challenge } } = req;
     const finalChallenge = new Challenges(challenge);
     return finalChallenge.save()
@@ -13,12 +13,34 @@ router.post('/post', (req, res, next) => {
 })
 
 // delete challenge route
-router.delete('/delete', (req, res, next) => {
+router.delete('/deleteOne', async (req, res, next) => {
+    try {
+        const response = await Challenges.deleteOne({id: req.body.id});
+        res.json({msg: 'update success'});
+    } catch(err) {
+        res.json({msg: err});
+    }
+})
 
+// Update existing challenge
+router.put('/updateOne', async (req, res, next) => {
+    try {
+        const response = await Challenges.updateOne({id: req.body.id}, {
+            createUserID: req.body.createUserID,
+            taskID: req.body.taskID,
+            title: req.body.title,
+            description: req.body.description,
+            userEnrolled: this.userEnrolled,
+            isCompleted: this.isCompleted
+        });
+        res.json({msg: 'update success'});
+    } catch (err) {
+        res.json({msg: err});
+    }
 })
 
 // GET challenge route
-router.get('/get', (req, res, next) => {
+router.get('/getOne', (req, res, next) => {
     const { payload: {id} } = req;
 
     return Challenges.findById(id)
