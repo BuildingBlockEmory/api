@@ -56,12 +56,16 @@ const BuildingSchema = new Schema({
 });
 
 const ChallengeSchema = new Schema({
-    createUserID: Number,
-    taskID: Number,
+    creatorUsername: String,
     title: String,
     description: String,
+    task: Object,
     userEnrolled: [Number],
-    isCompleted: Boolean,
+    reward: Number,
+    category: {
+        type: String,
+        enum: ['study', 'wellness'],
+    },
     date: Date,
 });
 
@@ -120,12 +124,12 @@ UsersSchema.methods.toAuthJSON = function() {
 ChallengeSchema.methods.toJSON = function () {
     return {
         _id: this._id,
-        createUserID: this.createUserID,
-        taskID: this.taskID,
+        creatorUsername: this.creatorUsername,
         title: this.title,
         description: this.description,
         userEnrolled: this.userEnrolled,
-        isCompleted: this.isCompleted,
+        reward: this.reward,
+        category: this.category,
         date: this.date
     }
 }
