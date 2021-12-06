@@ -66,7 +66,109 @@ router.post('/', auth.optional, (req, res, next) => {
 
 });
 
-//PUT existing user route (optional, everyone has access)
+// update single user task list
+router.put('/updateUserTasks', auth.required, async (req, res, next) => {
+    const { payload: { id } } = req;
+    const { body: { user } } = req;
+    Users.findOneAndUpdate({ _id: id },
+        { $set: {
+                tasks: user.tasks }
+        }, {upsert: false}, (err, doc) => {
+            if (err) {
+                return res.status(422).json({
+                    errors: {
+                        password: 'cannot update',
+                    },
+                });
+            } else {
+                return res.json({ user: doc.toAuthJSON() })
+            }
+        })
+})
+
+// update single user building
+router.put('/updateUserBuilding', auth.required, async (req, res, next) => {
+    const { payload: { id } } = req;
+    const { body: { user } } = req;
+    Users.findOneAndUpdate({ _id: id },
+        { $set: {
+                buildings: user.buildings }
+        }, {upsert: false}, (err, doc) => {
+            if (err) {
+                return res.status(422).json({
+                    errors: {
+                        password: 'cannot update',
+                    },
+                });
+            } else {
+                return res.json({ user: doc.toAuthJSON() })
+            }
+        })
+})
+
+
+// update single user study points
+router.put('/updateUserStudy', auth.required, async (req, res, next) => {
+    const { payload: { id } } = req;
+    const { body: { user } } = req;
+    Users.findOneAndUpdate({ _id: id },
+        { $set: {
+                study_point: user.study_point }
+        }, {upsert: false}, (err, doc) => {
+            if (err) {
+                return res.status(422).json({
+                    errors: {
+                        password: 'cannot update',
+                    },
+                });
+            } else {
+                return res.json({ user: doc.toAuthJSON() })
+            }
+        })
+})
+
+// update single user wellness points
+router.put('/updateUserWellness', auth.required, async (req, res, next) => {
+    const { payload: { id } } = req;
+    const { body: { user } } = req;
+    Users.findOneAndUpdate({ _id: id },
+        { $set: {
+                wellness_point: user.wellness_point }
+        }, {upsert: false}, (err, doc) => {
+            if (err) {
+                return res.status(422).json({
+                    errors: {
+                        password: 'cannot update',
+                    },
+                });
+            } else {
+                return res.json({ user: doc.toAuthJSON() })
+            }
+        })
+})
+
+// update single user challenge
+router.put('/updateUserChallenges', auth.required, async (req, res, next) => {
+    const { payload: { id } } = req;
+    const { body: { user } } = req;
+    Users.findOneAndUpdate({ _id: id },
+        { $set: {
+                challenges: user.challenges }
+        }, {upsert: false}, (err, doc) => {
+            if (err) {
+                return res.status(422).json({
+                    errors: {
+                        password: 'cannot update',
+                    },
+                });
+            } else {
+                return res.json({ user: doc.toAuthJSON() })
+            }
+        })
+})
+
+
+//PUT existing user route
 //We update a user this way
 router.put('/update', auth.required, async (req, res, next) => {
     const { payload: { id } } = req;
