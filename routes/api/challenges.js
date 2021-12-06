@@ -39,7 +39,7 @@ router.put('/updateOne', async (req, res, next) => {
     }
 })
 
-// GET challenge route
+// GET single challenge route
 router.get('/getOne', (req, res, next) => {
     const { payload: {id} } = req;
 
@@ -51,5 +51,15 @@ router.get('/getOne', (req, res, next) => {
             return res.json({challenge: cha.toJSON()});
         });
 });
+
+// GET all challenges route
+router.get('/getAll', async (req, res) => {
+    try {
+        const response = await Challenges.find({});
+        res.json(response);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+})
 
 module.exports = router;
