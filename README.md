@@ -27,6 +27,10 @@ The Nodemon will automatically restart the terminal commands when you save the f
 
 The api will be running at http://localhost:8000/. The current version has three routes. You can use [Postman](https://www.postman.com/downloads/) to test the routes.
 
+### Updated December 5th
+I have added the challenge API. You can perform "get, insert, update, and delete" operations at http://localhost:8000/api/challenges/. 
+For example, if you want to add one challenge into the database, perform a post request on http://localhost:8000/api/challenges/insertOne. 
+
 ### Create a user
 We use "post" request at http://localhost:8000/api/users/. 
 ```
